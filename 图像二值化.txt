@@ -1,0 +1,21 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+int main(){
+Mat srcimage,dstimage;
+int T;
+int CV_THRESH_BINARY;
+srcimage=imread("1.jpg");
+imshow("11",srcimage);
+cvThreshold(srcimage,dstimage,T,255,CV_THRESH_BINARY);
+
+imshow("22",dstimage);
+
+waitKey(0);
+
+
+return 0;
+
+}

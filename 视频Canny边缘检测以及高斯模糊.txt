@@ -1,0 +1,23 @@
+#include<opencv2/opencv.hpp>
+using namespace cv;
+
+int main(){
+VideoCapture capture ("1.avi");//
+
+Mat edges;
+
+while(1)//循环显示每一帧
+{
+Mat frame ;
+capture>>frame;
+
+cvtColor(frame,edges,CV_BGR2GRAY);
+
+blur (edges, edges,Size(5,5));
+
+Canny(edges ,edges,0,30,3);
+imshow("12",edges);
+if(waitKey(30)>=0) break;
+}
+return 0;
+}

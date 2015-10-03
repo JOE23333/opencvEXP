@@ -1,0 +1,14 @@
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+
+int main(){
+Mat image=imread("");
+imshow("",);
+Mat disimage;
+blur(image,disimage,Size(5,5));
+
+imshow("",disimage);
+waitKey(0);
+}

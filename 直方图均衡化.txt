@@ -1,0 +1,23 @@
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+
+int main(){
+Mat srcimage ,dstimage;
+srcimage=imread("1.jpg",1);
+
+if(!srcimage.data){printf("wrong photo\n");return false;}
+
+
+cvtColor(srcimage,srcimage,COLOR_BGR2GRAY);
+imshow("11",srcimage);
+
+equalizeHist(srcimage,dstimage);
+
+imshow("22",dstimage);
+
+waitKey(0);
+return 0;
+
+}

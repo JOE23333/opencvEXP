@@ -1,0 +1,33 @@
+#include<opencv2/cpre/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<iostream>
+
+
+using namespace std;
+using namespace cv;
+
+
+int main(){
+
+
+Mat image=imread("1.jpg");
+
+
+namedWindow("yuantu");
+namedWindow("xiaoguotu");
+
+imshow("yuantu",image);
+
+Mat element=getStructuringElement(MORPH_RECT,Size(15,15));
+
+Mat dstimage;
+dilate(image,dstimage,element);
+
+imshow("xiaoguotu",dstimage);
+
+waitKey(0);
+return 0;
+
+
+}

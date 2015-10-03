@@ -1,0 +1,108 @@
+
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<iostream>
+
+
+using namespace std;
+using namespace cv;
+
+Mat g_srcimage, g_dstimage1, g_dstimage2, g_dstimage3;
+
+int g_nBoxFilterValue = 3;
+int g_nMeanBlurValue = 3;
+int g_nGaussianBlurValue = 3;
+
+
+
+static void on_BoxFilter(int, void *);
+
+static void on_MeanBlur(int, void *);
+
+static void on_GaussianBlur(int, void *);
+
+
+
+
+int main(){
+
+
+	system("color5E");
+
+
+	g_srcimage = imread("1.jpg",1);
+
+	if (!g_srcimage.data){ printf("error"); return false; }
+
+
+	g_dstimage1 = g_srcimage.clone();
+	g_dstimage2 = g_srcimage.clone();
+	g_dstimage3 = g_srcimage.clone();
+
+	namedWindow("00", 1);
+	imshow("00", g_srcimage);
+
+
+
+	//box
+
+	namedWindow("11", 1);
+	createTrackbar("", "", &g_nBoxFilterValue, 40, on_BoxFilter);
+	on_BoxFilter(g_nBoxFilterValue, 0);
+	imshow("11", g_dstimage1);
+
+	// junzhi
+
+	namedWindow("22", 1);
+	createTrackbar("", "", &g_nMeanBlurValue, 40, on_MeanBlur);
+	on_MeanBlur(g_nMeanBlurValue, 0);
+
+
+	//gaosi
+
+	namedWindow("33", 1);
+	createTrackbar("1", "2", &g_nGaussianBlurValue, 40, on_GaussianBlur);
+	on_GaussianBlur(g_nGaussianBlurValue, 0);
+
+
+
+	cout << endl << "\t123\n\n" << "\txxxxx\n";
+
+
+	waitKey(0);
+
+	return 0;
+}
+
+
+
+
+static void on_BoxFilter(int, void *)
+
+{
+	boxFilter(g_srcimage, g_dstimage1, -1, Size(g_nBoxFilterValue + 1, g_nBoxFilterValue		+ 1));
+
+	imshow("11", g_dstimage1);
+
+
+}
+
+static void on_MeanBlur(int, void *)
+{
+	blur(g_srcimage, g_dstimage2, Size(g_nMeanBlurValue + 1, g_nMeanBlurValue + 1));
+
+
+	imshow("22", g_dstimage2);
+}
+
+
+static void on_GaussianBlur(int, void *){
+
+	GaussianBlur(g_srcimage, g_dstimage3, Size		(g_nGaussianBlurValue * 2 + 1, g_nGaussianBlurValue * 2 + 1), 0, 0);
+	imshow("33", g_dstimage3);
+
+}
+
+
+
+

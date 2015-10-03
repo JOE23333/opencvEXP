@@ -1,0 +1,26 @@
+#include<openccv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+
+int main (){
+
+Mat image =imread("");
+
+
+namedWindow("yuantu");
+namedWindow("xiaoguotu");
+
+imshow("",image);
+
+Mat disimage;
+
+boxFilter(image,disimage;-1,Size (5,5));
+
+imshow("xiaoguotu",disimage);
+
+waitKey(0);
+
+
+}

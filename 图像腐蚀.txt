@@ -1,0 +1,15 @@
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+int main (){
+Mat image=imread("");
+imshow("[]",image);
+Mat element = getStructuringElement(MORPH_RECT,Size(15,15));
+Mat disimage;
+erode(image,disimage,element);
+imshow("1223",disimage);
+wiatKey(0);
+
+return 0;
+}

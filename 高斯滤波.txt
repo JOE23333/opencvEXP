@@ -1,0 +1,28 @@
+#include<openccv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+
+int main (){
+
+Mat image=imread("1.jpg");
+
+namedWindow("yuantu");
+namedWindow("xiaoguotu");
+
+imshow("yuantu",image);
+
+Mat disimage;
+GaussianBlur(image, disimage,Size(3,3),0,0);
+
+imshow("xiaoguotu",disimage);
+
+waitKey(0);
+
+
+
+
+
+
+}

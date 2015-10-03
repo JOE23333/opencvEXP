@@ -1,0 +1,8 @@
+#include<opencv2/opencv.hpp>
+wuing namespace cv;//命名空间的包含
+
+
+main(){
+Mat image=imread("1.jpg");
+imshow("1122",image);
+wiatKey();}
