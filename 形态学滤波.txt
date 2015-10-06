@@ -1,0 +1,148 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+using namespace std;
+
+Mat g_srcimage, g_dstimage;
+int g_nElementShape = MORPH_RECT;
+
+int g_nMaxIterationNum = 10;
+int g_nOpenCloseNum = 0;
+int g_nErodeDilateNum = 0;
+int g_nTopBlackHatNum = 0;
+
+
+static void on_OpenClose(int, void*);
+static void on_ErodeDilate(int, void*);
+static void on_TopBlackHat(int, void*);
+static void ShowHelpText();
+
+
+
+int main(){
+	g_srcimage = imread("1.jpg");
+
+	namedWindow("11");
+	imshow("11", g_srcimage);
+
+	namedWindow("[kaibi]", 1);
+	namedWindow("[fushi,penzhang]", 1);
+	namedWindow("[ding,heima]", 1);
+
+	g_nOpenCloseNum = 9;
+	g_nErodeDilateNum = 9;
+	g_nTopBlackHatNum = 2;
+
+	createTrackbar("迭代值", "[kai,bi]", &g_nOpenCloseNum, g_nMaxIterationNum * 2 + 1, on_OpenClose);
+
+
+	createTrackbar("迭代值", "[fushi,penzhang]", &g_nErodeDilateNum, g_nMaxIterationNum * 2 + 1, on_ErodeDilate);
+
+
+	createTrackbar("迭代值", "[ding,heima]", &g_nTopBlackHatNum, g_nMaxIterationNum * 2 + 1, on_TopBlackHat);
+
+
+	while (1)
+	{
+		int c;
+		on_OpenClose(g_nOpenCloseNum, 0);
+		on_ErodeDilate(g_nErodeDilateNum, 0);
+		on_TopBlackHat(g_nTopBlackHatNum, 0);
+
+		c = waitKey(0);
+
+
+		if ((char)c == 'q' || (char)c == 27)
+			break;
+
+		if ((char)c == 49)
+			g_nElementShape = MORPH_ELLIPSE;
+
+		else if ((char)c == 50)
+			g_nElementShape = MORPH_RECT;
+
+		else if ((char)c == 51)
+			g_nElementShape = MORPH_CROSS;
+
+		else if ((char)c == ' ')
+			g_nElementShape = (g_nElementShape + 1) % 3;
+	}
+
+	return 0;
+
+}
+
+
+
+
+static void on_OpenClose(int, void*)
+{
+	int offset = g_nOpenCloseNum - g_nMaxIterationNum;
+	int Absolute_offset = offset > 0 ? offset : -offset;
+
+	Mat element = getStructuringElement(g_nElementShape, Size(Absolute_offset * 2 + 1, Absolute_offset * 2 + 1), Point		(Absolute_offset, Absolute_offset));
+
+	if (offset<0)
+		morphologyEx(g_srcimage, g_dstimage, CV_MOP_OPEN, element);
+	//morphologyEx(g_srcimage,g_dstimage,MORPH_OPEN,element);
+
+	morphologyEx(g_srcimage, g_dstimage, CV_MOP_CLOSE, element);
+	//morphologyEx(g_srcimage,g_dstimage,MORPH_CLOSE,element);
+
+	imshow("[kaibi]", g_dstimage);
+
+}
+
+
+
+static void on_ErodeDilate(int, void*){
+
+	int offset = g_nOpenCloseNum - g_nMaxIterationNum;
+	int Absolute_offset = offset>0 ? offset : -offset;
+
+	Mat element = getStructuringElement(g_nElementShape, Size(Absolute_offset * 2 + 1, Absolute_offset * 2 + 1), Point		(Absolute_offset, Absolute_offset));
+
+
+	if (offset<0)
+		erode(g_srcimage, g_dstimage, element);
+	else
+		dilate(g_srcimage, g_dstimage, element);
+	imshow("[fushi,penzhang]", g_dstimage);
+
+}
+
+
+static void on_TopBlackHat(int, void*){
+
+	int offset = g_nOpenCloseNum - g_nMaxIterationNum;
+	int Absolute_offset = offset>0 ? offset : -offset;
+
+	Mat element = getStructuringElement(g_nElementShape, Size(Absolute_offset * 2 + 1, Absolute_offset * 2 + 1), Point		(Absolute_offset, Absolute_offset));
+
+	if (offset<0)
+		morphologyEx(g_srcimage, g_dstimage, MORPH_TOPHAT, element);
+	else
+		morphologyEx(g_srcimage, g_dstimage, MORPH_BLACKHAT, element);
+	imshow("[ding,heima]", g_dstimage);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,0 @@
-temp 
-%USERPROFILE%\AppData\Local\Temp
-
-
-tmp
-%USERPROFILE%\AppData\Local\Temp
