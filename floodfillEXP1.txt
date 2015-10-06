@@ -1,0 +1,14 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<opencv2/highgui/highgui.hpp>
+using namespace cv;
+int main(){
+	Mat srcimage=imread("1.jpg");
+	imshow("yuantu",srcimage);
+	Rect ccomp;
+	floodFill(srcimage,Point(50,300),Scalar(155,255,55),&ccomp,Scalar(20,20,20),Scalar(20,20,20));
+	imshow("xiaoguo",srcimage);
+	waitKey(0);
+	return 0;
+	
+}
