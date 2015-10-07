@@ -1,0 +1,84 @@
+
+
+#include<opencv2/opencv.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include <iostream>
+using namespace cv;
+using namespace std;
+
+bool ROI_Addimage();
+bool LinearBlending();
+bool ROI_LinearBlending();
+
+int main()
+{
+	system("color 5E");
+	if (ROI_Addimage() && LinearBlending() && ROI_LinearBlending())
+	{
+		cout << endl << "sussced:)";
+
+	}
+	waitKey(0);
+	return 0;
+
+}
+
+bool ROI_Addimage()
+{
+	Mat srcimage1 = imread("1.jpg");
+	Mat logoimage = imread("th.jpg");
+	Mat imageROI = srcimage1(Rect(200, 250, logoimage.cols, logoimage.rows));
+
+	Mat mask = imread("th.jpg", 0);
+	cvtColor(mask, mask, CV_RGB2GRAY);
+	logoimage.copyTo(imageROI, mask);
+	namedWindow("<1>ROItuxiang");
+	imshow("<1>ROItuxiang", srcimage1);
+	return true;
+
+
+}
+
+
+bool LinearBlending()
+{
+	double alphaValue = 0.5;
+	double betaValue;
+	Mat srcimage2, srcimage3, dstimage;
+	srcimage2 = imread("1.jpg");
+	srcimage3 = imread("Alpha.png");
+
+	betaValue = (1.0 - alphaValue);
+	addWeighted(srcimage2, alphaValue, srcimage3, betaValue, 0.0, dstimage);
+	namedWindow("<2>", 1);
+	imshow("<2>", srcimage2);
+
+	namedWindow("<3>", 1);
+	imshow("<3>", dstimage);
+
+	return true; 
+
+
+
+}
+
+bool ROI_LinearBlending()
+{
+	Mat srcimage4 = imread("1.jpg", 1);
+	Mat logoimage = imread("th.jpg", 1);
+
+	Mat imageROI;
+	
+	//1
+	//imageROI = srcimage4(Rect(200, 250, logoimage.rows, logoimage.cols));
+	imageROI=srcimage4(Range(250,250+logoimage.rows),Range(200,200+logoimage.cols));
+
+	addWeighted(imageROI, 0.5, logoimage, 0.3, 0.0, imageROI);
+
+	namedWindow("<4>QUYUXIANXING");
+	imshow("<4>QUYUXIANXING", srcimage4);
+
+	return true;
+
+
+}

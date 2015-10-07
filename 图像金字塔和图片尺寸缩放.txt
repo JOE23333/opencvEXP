@@ -1,0 +1,63 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<opencv2/highgui/highgui.hpp>
+using namespace cv;
+using namespace std;
+#define WINDOW_NAME "chuangkou"
+
+Mat g_srcimage, g_dstimage, g_tmpimage;
+
+int main(){
+	g_srcimage = imread("1.jpg");
+
+	namedWindow(WINDOW_NAME, WINDOW_AUTOSIZE);
+	imshow(WINDOW_NAME, g_srcimage);
+
+	g_tmpimage = g_srcimage;
+	g_dstimage = g_tmpimage;
+	int key = 0;
+	while (1)
+	{
+		key = waitKey(9);
+		switch (key)
+		{
+		case 27:
+			return 0;
+			break;
+
+		case'q':
+			return 0;
+			break;
+
+		case'a':
+			pyrUp(g_tmpimage, g_dstimage, Size(g_tmpimage.cols * 2, g_tmpimage.rows * 2));
+			break;
+
+		case'w':
+			resize(g_tmpimage, g_dstimage, Size(g_tmpimage.cols * 2, g_tmpimage.rows * 2));
+			break;
+
+		case'd':
+			pyrDown(g_tmpimage, g_dstimage, Size(g_tmpimage.cols / 2, g_tmpimage.rows / 2));
+			break;
+
+		case's':
+			resize(g_tmpimage, g_dstimage, Size(g_tmpimage.cols / 2, g_tmpimage.rows / 2));
+
+
+
+		}
+		imshow("11", g_dstimage);
+		g_tmpimage = g_dstimage;
+	}
+
+
+
+
+
+
+	
+	return 0;
+
+
+}

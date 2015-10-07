@@ -1,0 +1,20 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+int main(){
+	Mat srcimage = imread("1.jpg");
+	Mat tmpimage, dstimage1, dstimage2;
+	tmpimage = srcimage;
+
+	imshow("yuantu", srcimage);
+
+	resize(tmpimage, dstimage1, Size(tmpimage.cols / 2, tmpimage.rows / 2), (0, 0), (0, 0), 3);
+	resize(tmpimage, dstimage2, Size(tmpimage.cols * 2, tmpimage.rows * 2), (0, 0), (0, 0), 3);
+
+	imshow("11", dstimage1);
+	imshow("22", dstimage2);
+	waitKey(0);
+	return 0;
+
+
+}
