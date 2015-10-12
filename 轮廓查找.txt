@@ -1,0 +1,29 @@
+#include<opencv2/opencv.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+using namespace cv;
+
+int main()
+{
+	Mat srcimage = imread("1.jpg");
+	imshow("yuantu ", srcimage);
+
+	Mat dstimage = Mat::zeros(srcimage.rows, srcimage.cols, CV_8UC3);
+	srcimage = srcimage>119;
+	imshow("11", srcimage);
+
+	vector <vector<Point>> contours;
+	vector<Vec4i> hierarchy;
+
+	findContours(srcimage, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
+
+	int index = 0;
+	for (; index >= 0; index = hierarchy[index](0))
+	{
+		Scalar color(rand() & 255, rand() & 255, rand() & 255);
+		drawContours(dstimage, contours, index, color, CV_FILLED, 8, hierarchy);
+	}
+	imshow("22", dstimage);
+
+	waitKey(0);
+}
